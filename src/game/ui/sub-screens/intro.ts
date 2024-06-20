@@ -5,7 +5,7 @@ import ResourcesLoadingTitle from "../components/resources-loading-title"
 import ResourcesLoadingBar from "../components/resources-loading-bar"
 import ScreenBackground from "../components/screen-background"
 import LogoIntro from "../components/logo-intro"
-import { MarcuthCraftState } from "../.."
+import { MarcuthCraftState } from "../../marcuthcraft"
 
 type SetupProps = {
     logoIntroResource: ResourceItem

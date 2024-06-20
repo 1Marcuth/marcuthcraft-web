@@ -1,6 +1,6 @@
 import { ui } from "gamx"
 
-import { MarcuthCraftState } from "../.."
+import { MarcuthCraftState } from "../../marcuthcraft"
 
 type Props = {
     image: HTMLImageElement

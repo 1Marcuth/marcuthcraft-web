@@ -1,10 +1,10 @@
 import { FC } from "react"
 
-type Props = {}
+import GameScreen from "../components/features/game-screen"
 
-const HomePage: FC<Props> = ({  }) => {
+const HomePage: FC = () => {
     return (
-        <></>
+        <GameScreen/>
     )
 }
 

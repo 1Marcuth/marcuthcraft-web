@@ -2,16 +2,17 @@ import { ResourceItem } from "gamx/dist/util/resource-loader"
 import WidgetManager from "gamx/dist/ui/widget-manager"
 import { ui } from "gamx"
 
+import MainMenuSingleplayerButton from "../components/main-menu-singleplayer-button"
 import MainMenuSecondLayer from "../components/main-menu-second-layer"
 import MainMenuFirstLayer from "../components/main-menu-first-layer"
 import MainMenuThridLayer from "../components/main-menu-thrid-layer"
 import MainMenuLogoTitle from "../components/main-menu-logo-title"
-import MainMenuButton from "../components/main-menu-button"
-import { MarcuthCraftState } from "../.."
+import { MarcuthCraftState } from "../../marcuthcraft"
 
 type SetupProps = {
     widgetManager: WidgetManager
     canvasWidth: number
+    widgetsResource: ResourceItem
 }
 
 class MainMenuSubScreen extends ui.SubScreen<MarcuthCraftState, SetupProps> {
@@ -28,24 +29,33 @@ class MainMenuSubScreen extends ui.SubScreen<MarcuthCraftState, SetupProps> {
         })
 
         const thridLayer = new MainMenuThridLayer({ image: backgroundBlurResource.object as HTMLImageElement })
-
         const logoTitle = new MainMenuLogoTitle({ image: logoTitleResource.object as HTMLImageElement })
 
-        // const singlePlayerButton = new MainMenuButton({
-        //     widgetManager: setupProps.widgetManager,
-        //     buttonObservers: [],
-        //     coordinates: {
-        //         x: (setupProps.canvasWidth - MainMenuButton.buttonSize.width) / 2,
-        //         y: 329
-        //     },
-        //     image: 
-        // })
+        const buttonWidgetImage = setupProps.widgetsResource.object as HTMLImageElement
+
+        const singlePlayerButton = new MainMenuSingleplayerButton({
+            widgetManager: setupProps.widgetManager,
+            buttonObservers: [
+                (event, ...args) => {
+                    if (event === "click") {
+                        
+                    }
+                }
+            ],
+            coordinates: {
+                x: (setupProps.canvasWidth - MainMenuSingleplayerButton.buttonSize.width) / 2,
+                y: 329
+            },
+            image: buttonWidgetImage,
+            imageMouseOver: buttonWidgetImage,
+        })
 
         this.components.push(
             firstLayer,
             secondLayer,
             thridLayer,
-            logoTitle
+            logoTitle,
+            singlePlayerButton
         )
     }
 }

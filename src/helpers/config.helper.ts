@@ -2,7 +2,7 @@ const configHelper = {
     gameUi: {
         screenSize: {
             width: 1280,
-            height: 720,
+            height: 720
         },
         defaultBackgroundColor: "#000000",
         defaultState: {

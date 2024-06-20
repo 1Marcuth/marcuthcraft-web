@@ -1,21 +1,23 @@
-import { FC, useRef } from "react"
-import Gamx from "gamx"
-import createGame from "../../game"
+import { FC, useEffect } from "react"
 
-export type ScreenSize = {
-    width: number
-    height: number
-}
+import MarcuthCraftGame from "../../game/marcuthcraft"
 
-type Props = {
-    screenSize: ScreenSize
-}
+const GameScreen: FC = () => {
+    useEffect(() => {
+        const game = new MarcuthCraftGame({
+            document: document,
+            rootQuery: ".game-screen"
+        })
 
-const GameScreen: FC<Props> = () => {
-    const game = useRef<Gamx>(createGame(document))
+        game.renderer.play()
+
+        return () => {
+            game.destroy()
+        }
+    }, []) 
 
     return (
-        <div id="root"/>
+        <div className="game-screen"></div>
     )
 }
 
