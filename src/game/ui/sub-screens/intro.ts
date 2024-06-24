@@ -1,10 +1,10 @@
 import { ResourceItem } from "gamx/dist/util/resource-loader"
 import { ui } from "gamx"
 
-import ResourcesLoadingTitle from "../components/resources-loading-title"
-import ResourcesLoadingBar from "../components/resources-loading-bar"
+import ResourcesLoadingTitle from "../components/intro/resources-loading-title"
+import ResourcesLoadingBar from "../components/intro/resources-loading-bar"
 import ScreenBackground from "../components/screen-background"
-import LogoIntro from "../components/logo-intro"
+import LogoIntro from "../components/intro/logo-intro"
 import { MarcuthCraftState } from "../../marcuthcraft"
 
 type SetupProps = {

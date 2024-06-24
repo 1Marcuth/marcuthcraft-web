@@ -4,29 +4,35 @@ import { Coordinates } from "gamx/dist/common/types"
 import Button from "gamx/dist/ui/button"
 import { ui } from "gamx"
 
-import MainMenuSingleplayerButtonText from "./main-menu-singleplayer-button-text"
+import MainMenuButtonText from "./button-text"
 
 type Props = {
+    id: string
+    text: string
     image: HTMLImageElement
     imageMouseOver: HTMLImageElement
     coordinates: Coordinates
-    buttonObservers: Observer[],
+    buttonObservers: Observer[]
     widgetManager: WidgetManager
 }
 
-class MainMenuSingleplayerButton extends ui.Component<Props> {
+class MainMenuButton extends ui.Component<Props> {
     public static buttonSize = {
         width: 545,
         height: Math.round(545 / 10)
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
-        const mainMenuSingleplayerButtonText = new MainMenuSingleplayerButtonText()
-        const buttonSize = MainMenuSingleplayerButton.buttonSize
-        const buttonId = "mainMenuSingleplayerButton"
+        const buttonSize = MainMenuButton.buttonSize
         let button: Button | undefined
+
+        const mainMenuSingleplayerButtonText = new MainMenuButtonText({
+            text: this.props.text,
+            buttonSize: buttonSize,
+            buttonY: this.props.coordinates.y
+        })
         
-        button = this.props.widgetManager.get(buttonId) as Button | undefined
+        button = this.props.widgetManager.get(this.props.id) as Button | undefined
 
         if (!button) {
             button = new ui.Button({
@@ -50,7 +56,7 @@ class MainMenuSingleplayerButton extends ui.Component<Props> {
                 }
             })
 
-            button.id = buttonId
+            button.id = this.props.id
 
             for (const observer of this.props.buttonObservers) {
                 button.subscribe(observer)
@@ -64,4 +70,4 @@ class MainMenuSingleplayerButton extends ui.Component<Props> {
     }
 }
 
-export default MainMenuSingleplayerButton
+export default MainMenuButton

@@ -2,21 +2,27 @@ import { ResourceItem } from "gamx/dist/util/resource-loader"
 import WidgetManager from "gamx/dist/ui/widget-manager"
 import { ui } from "gamx"
 
-import MainMenuSingleplayerButton from "../components/main-menu-singleplayer-button"
-import MainMenuSecondLayer from "../components/main-menu-second-layer"
-import MainMenuFirstLayer from "../components/main-menu-first-layer"
-import MainMenuThridLayer from "../components/main-menu-thrid-layer"
-import MainMenuLogoTitle from "../components/main-menu-logo-title"
+import SplashMessageManager from "../../helpers/splash-message-manager.helper"
+import MainMenuSecondLayer from "../components/main-menu/second-layer"
+import MainMenuFirstLayer from "../components/main-menu/first-layer"
+import MainMenuThridLayer from "../components/main-menu/thrid-layer"
+import MainMenuLogoTitle from "../components/main-menu/logo-title"
+import SplashMessage from "../components/main-menu/splash-message"
+import MainMenuButton from "../components/main-menu/button"
 import { MarcuthCraftState } from "../../marcuthcraft"
 
 type SetupProps = {
     widgetManager: WidgetManager
     canvasWidth: number
     widgetsResource: ResourceItem
+    splashMessageManager: SplashMessageManager
+    goToCreateWorldSubScreen: () => void
 }
 
 class MainMenuSubScreen extends ui.SubScreen<MarcuthCraftState, SetupProps> {
     public setup(setupProps: SetupProps): void {
+        setupProps.splashMessageManager.start()
+
         const secondBackgroundLayerResource = this.gameState.mainResources.find(resource => resource.id === "secondBackgroundLayer") as ResourceItem
         const backgroundBlurResource = this.gameState.mainResources.find(resource => resource.id === "backgroundBlur") as ResourceItem
         const logoTitleResource = this.gameState.mainResources.find(resource => resource.id === "logo") as ResourceItem
@@ -33,29 +39,34 @@ class MainMenuSubScreen extends ui.SubScreen<MarcuthCraftState, SetupProps> {
 
         const buttonWidgetImage = setupProps.widgetsResource.object as HTMLImageElement
 
-        const singlePlayerButton = new MainMenuSingleplayerButton({
+        const singlePlayerButton = new MainMenuButton({
             widgetManager: setupProps.widgetManager,
+            id: "mainMenuSingleplayerButton",
+            text: "Singleplayer",
             buttonObservers: [
                 (event, ...args) => {
                     if (event === "click") {
-                        
+                        setupProps.goToCreateWorldSubScreen()
                     }
                 }
             ],
             coordinates: {
-                x: (setupProps.canvasWidth - MainMenuSingleplayerButton.buttonSize.width) / 2,
+                x: (setupProps.canvasWidth - MainMenuButton.buttonSize.width) / 2,
                 y: 329
             },
             image: buttonWidgetImage,
             imageMouseOver: buttonWidgetImage,
         })
 
+        const splashMessage = new SplashMessage({ splashMessageManager: setupProps.splashMessageManager })
+
         this.components.push(
             firstLayer,
             secondLayer,
             thridLayer,
             logoTitle,
-            singlePlayerButton
+            singlePlayerButton,
+            splashMessage
         )
     }
 }

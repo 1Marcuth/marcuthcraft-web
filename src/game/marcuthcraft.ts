@@ -3,10 +3,12 @@ import { ResourceItem } from "gamx/dist/util/resource-loader"
 import MarcuthCraftCore from "marcuthcraft-core"
 import Gamx from "gamx"
 
+import SplashMessageManager from "./helpers/splash-message-manager.helper"
 import defaultResources from "./defaults/resources.default"
 import MainMenuSubScreen from "./ui/sub-screens/main-menu"
 import configHelper from "../helpers/config.helper"
 import IntroSubScreen from "./ui/sub-screens/intro"
+import CreateWorldSubScreen from "./ui/sub-screens/create-world"
 
 export type MarcuthCraftOptions = {
     document: Document
@@ -22,6 +24,7 @@ export type MarcuthCraftState = {
 
 class MarcuthCraftGame extends Gamx<MarcuthCraftState> {
     public core: MarcuthCraftCore
+    public splashMessageManager: SplashMessageManager
 
     public constructor({ document, rootQuery }: MarcuthCraftOptions) {
         super({
@@ -33,6 +36,15 @@ class MarcuthCraftGame extends Gamx<MarcuthCraftState> {
         })
 
         this.core = MarcuthCraftCore.createDefault()
+
+        this.splashMessageManager = new SplashMessageManager({
+            messages: configHelper.gameUi.splashMessages,
+            intervalTime: configHelper.gameUi.splashMessageInterval
+        })
+
+        const ctx = this.screen.canvas.getContext("2d")!
+
+        ctx.imageSmoothingEnabled = false
     }
 
     protected handleKeyboardListener(keyPressed: string, modifierKeys: ModifierKeys): void {
@@ -82,7 +94,18 @@ class MarcuthCraftGame extends Gamx<MarcuthCraftState> {
                             setupProps: {
                                 widgetManager: this.screen.widgetManager,
                                 canvasWidth: this.screen.size.width,
-                                widgetsResource: widgetsResource
+                                widgetsResource: widgetsResource,
+                                splashMessageManager: this.splashMessageManager,
+                                goToCreateWorldSubScreen: () => {
+                                    const createWorldSubScreen = new CreateWorldSubScreen({
+                                        ctx: ctx,
+                                        components: [],
+                                        gameState: this.state,
+                                        setupProps: {}
+                                    })
+            
+                                    this.renderer.setSubScreen(createWorldSubScreen)
+                                }
                             }
                         })
     

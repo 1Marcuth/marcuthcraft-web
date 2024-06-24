@@ -4,12 +4,23 @@ const configHelper = {
             width: 1280,
             height: 720
         },
-        defaultBackgroundColor: "#000000",
+        defaultBackgroundColor: "#FF2E3C",
         defaultState: {
             mainResources: [],
             secondBackgorundLayerOffsetX: 0
         },
-        rootQuery: "#root"
+        rootQuery: "#root",
+        version: "0.1.0",
+        splashMessages: [
+            "Feito em TypeScript!",
+            "Made in TypeScript",
+            "TypeScript is awesome!",
+            "Try Minecraft",
+            "GitHub: @1Marcuth",
+            "Insta: @marcuth.dev",
+            "By Marcuth"
+        ],
+        splashMessageInterval: 15000
     }
 }
 
