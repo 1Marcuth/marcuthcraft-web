@@ -56,7 +56,7 @@ class MainMenuSubScreen extends ui.SubScreen<MarcuthCraftState, SetupProps> {
             },
             image: buttonWidgetImage,
             imageMouseOver: buttonWidgetImage,
-        })
+        });
 
         const splashMessage = new SplashMessage({ splashMessageManager: setupProps.splashMessageManager })
 
